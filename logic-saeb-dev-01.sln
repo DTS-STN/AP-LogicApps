@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "logic-saeb-dev-01", "logic-app-saeb-d\logic-saeb-dev-01.deployproj", "{A6B1F6D1-38B9-41CC-A426-24F57162F07D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6B1F6D1-38B9-41CC-A426-24F57162F07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6B1F6D1-38B9-41CC-A426-24F57162F07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6B1F6D1-38B9-41CC-A426-24F57162F07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6B1F6D1-38B9-41CC-A426-24F57162F07D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B587F4AD-DF9D-49DC-8CBF-1EB51C160D10}
+	EndGlobalSection
+EndGlobal

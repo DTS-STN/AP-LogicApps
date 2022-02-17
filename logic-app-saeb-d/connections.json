@@ -1,0 +1,28 @@
+﻿{
+  "managedApiConnections": {
+    "azureblob": {
+      "api": {
+        "id": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/providers/Microsoft.Web/locations/canadacentral/managedApis/azureblob"
+      },
+      "connection": {
+        "id": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Web/connections/azureblob"
+      },
+      "connectionRuntimeUrl": "https://9e3de476a1ba6ca3.16.common.logic-canadacentral.azure-apihub.net/apim/azureblob/c75f5052314346c89733b33e6054e02f",
+      "authentication": {
+        "type": "ManagedServiceIdentity"
+      }
+    },
+    "sharepointonline": {
+      "api": {
+        "id": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/providers/Microsoft.Web/locations/canadacentral/managedApis/sharepointonline"
+      },
+      "connection": {
+        "id": "/subscriptions/19bddd49-8e73-4699-930d-74baa7e5751e/resourceGroups/SAEB-AnalyticsPlatform-Dev/providers/Microsoft.Web/connections/sharepointonline"
+      },
+      "connectionRuntimeUrl": "https://9e3de476a1ba6ca3.16.common.logic-canadacentral.azure-apihub.net/apim/sharepointonline/8ee90f66c31e4322866a0c31f49298c9",
+      "authentication": {
+        "type": "ManagedServiceIdentity"
+      }
+    }
+  }
+}
