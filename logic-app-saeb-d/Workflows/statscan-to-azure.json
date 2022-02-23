@@ -1,0 +1,110 @@
+﻿{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Extract_archive_to_folder_(V2)": {
+        "inputs": {
+          "host": {
+            "connection": {
+              "referenceName": "azureblob"
+            }
+          },
+          "method": "post",
+          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('AccountNameFromSettings'))}/extractFolderV2",
+          "queries": {
+            "destination": "@triggerBody()?['destinationpath']",
+            "overwrite": true,
+            "queryParametersSingleEncoded": true,
+            "source": "@variables('statscan_zip_link')"
+          }
+        },
+        "runAfter": {
+          "Initialize_variable": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      },
+      "HTTP": {
+        "inputs": {
+          "authentication": {
+            "password": "@triggerBody()?['password']",
+            "type": "Basic",
+            "username": "@triggerBody()?['username']"
+          },
+          "method": "GET",
+          "uri": "@triggerBody()?['uri']"
+        },
+        "runAfter": {},
+        "type": "Http"
+      },
+      "Initialize_variable": {
+        "inputs": {
+          "variables": [
+            {
+              "name": "statscan_zip_link",
+              "type": "string",
+              "value": "@body('Parse_JSON')?['object']"
+            }
+          ]
+        },
+        "runAfter": {
+          "Parse_JSON": [
+            "Succeeded"
+          ]
+        },
+        "type": "InitializeVariable"
+      },
+      "Parse_JSON": {
+        "inputs": {
+          "content": "@body('HTTP')",
+          "schema": {
+            "properties": {
+              "object": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "runAfter": {
+          "HTTP": [
+            "Succeeded"
+          ]
+        },
+        "type": "ParseJson"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "triggers": {
+      "manual": {
+        "inputs": {
+          "schema": {
+            "properties": {
+              "destinationpath": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "uri": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "kind": "Http",
+        "type": "Request"
+      }
+    }
+  },
+  "kind": "Stateful"
+}
