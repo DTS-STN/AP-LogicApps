@@ -1,0 +1,86 @@
+﻿{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Create_blob_(V2)": {
+        "inputs": {
+          "body": "@body('Get_file_content')",
+          "headers": {
+            "ReadFileMetadataFromServer": true
+          },
+          "host": {
+            "connection": {
+              "referenceName": "azureblob"
+            }
+          },
+          "method": "post",
+          "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('AccountNameFromSettings'))}/files",
+          "queries": {
+            "folderPath": "/esdc-open-data/oas/",
+            "name": "number_of_new_benefits_by_province_and_type.csv",
+            "queryParametersSingleEncoded": true
+          }
+        },
+        "runAfter": {
+          "Get_file_content": [
+            "Succeeded"
+          ]
+        },
+        "runtimeConfiguration": {
+          "contentTransfer": {
+            "transferMode": "Chunked"
+          }
+        },
+        "type": "ApiConnection"
+      },
+      "Get_file_content": {
+        "inputs": {
+          "host": {
+            "connection": {
+              "referenceName": "sharepointonline"
+            }
+          },
+          "method": "get",
+          "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://014gc.sharepoint.com/sites/DECD'))}/files/@{encodeURIComponent('%252fClient%2bData%2b%2bPersonalization%252fOAS%2bEligibility%2bdata%252fOAS%252fOAS_OpenSource_New_Benefits_Province_Type.csv')}/content",
+          "queries": {
+            "inferContentType": true
+          }
+        },
+        "metadata": {
+          "%252fClient%2bData%2b%2bPersonalization%252fOAS%2bEligibility%2bdata%252fOAS%252fOAS_OpenSource_New_Benefits_Province_Type.csv": "/Client Data  Personalization/OAS Eligibility data/OAS/OAS_OpenSource_New_Benefits_Province_Type.csv",
+          "%252fClient%2bData%2b%2bPersonalization%252fOAS%2bEligibility%2bdata%252fOAS_OpenSource_New_Benefits_Province_Type.csv": "/Client Data  Personalization/OAS Eligibility data/OAS_OpenSource_New_Benefits_Province_Type.csv",
+          "%252fClient%2bData%2b%2bPersonalization%252fOAS%2bEligibility%2bdata%252fStatisticsCanada%252fOAS%252fOAS%2bEligibility%252f20210930-%2bOld%2bAge%2bSecurity%2b(OAS)%2b-%2bNumber%2bof%2bNew%2bBenefits%252c%2bby%2bProvince%2band%2bby%2bType.csv": "/Client Data  Personalization/OAS Eligibility data/StatisticsCanada/OAS/OAS Eligibility/20210930- Old Age Security (OAS) - Number of New Benefits, by Province and by Type.csv"
+        },
+        "runAfter": {},
+        "type": "ApiConnection"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "triggers": {
+      "When_a_file_is_created_or_modified_(properties_only)": {
+        "conditions": [
+          {
+            "expression": "@endsWith(trigger().outputs?['body']?['{FilenameWithExtension}'], 'OAS_OpenSource_New_Benefits_Province_Type.csv')"
+          }
+        ],
+        "inputs": {
+          "host": {
+            "connection": {
+              "referenceName": "sharepointonline"
+            }
+          },
+          "method": "get",
+          "path": "/datasets/@{encodeURIComponent(encodeURIComponent('https://014gc.sharepoint.com/sites/DECD'))}/tables/@{encodeURIComponent(encodeURIComponent('379e1a13-7aa0-4827-a725-89324a937d5f'))}/onupdatedfileitems"
+        },
+        "recurrence": {
+          "frequency": "Minute",
+          "interval": 1
+        },
+        "splitOn": "@triggerBody()?['value']",
+        "type": "ApiConnection"
+      }
+    }
+  },
+  "kind": "Stateful"
+}
